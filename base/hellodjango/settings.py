@@ -1,14 +1,4 @@
-# Django settings for django_tutorial project.
-
-import os
-import dj_database_url
-
-# path to the project dir
-PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
-
-# helper function to construct project related path
-project_path = lambda x: os.path.realpath(os.path.join(PROJECT_DIR, x))
-
+# Django settings for hellodjango project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -19,6 +9,18 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+import dj_database_url
 DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 
 # Local time zone for this installation. Choices can be found here:
@@ -57,7 +59,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = project_path('static')
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -79,7 +81,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'w^izbbvf8_!mj+u-&amp;$+(wu%_%-f+7$2)(95y$7(4mv3)j6hu*p'
+SECRET_KEY = 'm5uxvqpq#i#=l3%m1sq(*_g&amp;v$psto@-znomd*u2tq!0--+1c-'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -98,10 +100,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'django_tutorial.urls'
+ROOT_URLCONF = 'hellodjango.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'django_tutorial.wsgi.application'
+WSGI_APPLICATION = 'hellodjango.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -116,13 +118,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
-
-    'django_ace',
-    'south',
-
-    'frontend',
-    'core'
+    # Uncomment the next line to enable the admin:
+    # 'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -153,12 +152,3 @@ LOGGING = {
         },
     }
 }
-
-HEROKU_KEY = 'e8cfbdcb379b1051d4369d237b73f28702b917d5'
-TUTORIALS_PATH = project_path('../tutorials')
-
-
-try:
-    from local_settings import *
-except:
-    pass

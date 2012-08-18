@@ -9,7 +9,7 @@ import heroku
 
 from django.test import TestCase
 from models import OurUser, Inst
-from tasks import create_instance
+from tasks import create_instance, init_tutorial
 from django.conf import settings
 
 
@@ -37,3 +37,9 @@ class HerokuTest(TestCase):
     def test_exists(self):
         names = [x.name for x in self.cloud.apps]
         self.assertIn(self.name, names)
+
+    def test_init_tutorial(self):
+        inst = Inst.objects.get(app=self.name)
+        init_tutorial(inst, 1)
+
+
