@@ -7,3 +7,4 @@ South==0.7.6
 heroku
 django_celery==3.0.6
 django-kombu
+gunicorn==0.14.6
