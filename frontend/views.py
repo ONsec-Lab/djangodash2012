@@ -34,21 +34,21 @@ def tutorial(request, tutorial_id):
     # TODO: get tutorial
     request.session['tutorial_id'] = tutorial_id
     # store task id in sessions
-    tutorial_step = request.session.get('tutorial_step')
-    if tutorial_step is None:
-        tutorial_step = tutorial.step_set.all()[0].pk # default step_id
-    return redirect('tutorial_step', tutorial_id=tutorial_id, step_id=tutorial_step)
+    tutorial_step_num = request.session.get('tutorial_step_num')
+    if tutorial_step_num is None:
+        tutorial_step_num = tutorial.step_set.get(num=1) # first step in tutorial
+    return redirect('tutorial_step', tutorial_id=tutorial_id, step_num=tutorial_step_num)
 
-def tutorial_step(request, tutorial_id, step_id):
+def tutorial_step(request, tutorial_id, step_num):
     '''
     Tutorial step
     '''
     request.session['tutorial_id'] = tutorial_id
-    request.session['tutorial_step'] = step_id
+    request.session['tutorial_step_num'] = step_num
 
     tutorial = get_object_or_404(Tutorial, pk=tutorial_id)
     try:
-        step = tutorial.step_set.get(pk=step_id)
+        step = tutorial.step_set.get(num=step_num)
     except Step.DoesNotExist as e:
         raise Http404()
     initial = {
@@ -63,21 +63,25 @@ def tutorial_step(request, tutorial_id, step_id):
 
 @ensure_csrf_cookie
 @csrf_protect
-def tutorial_step_run(request, tutorial_id, step_id):
+def tutorial_step_run(request, tutorial_id, step_num):
     '''
     Run user code
     Returns task id, that run user code
     '''
     if not request.is_ajax() or request.method != 'POST':
         raise Http404()
-    # task = TutorialStep.objects.get(tutorial_id=tutorial_id, step=step_id)
+    tutorial = get_object_or_404(Tutorial, pk=tutorial_id)
+    try:
+        step = tutorial.step_set.get(num=step_num)
+    except Step.DoesNotExist as e:
+        raise Http404()
     try:
         data = json.loads(request.raw_post_data)
         code = data['code']
     except (KeyError, ValueError) as e:
         print e
         raise Http404()
-    task_id = step.run(code)
+    # task_id = step.run(code)
     task_id = 1
     request.session['task_id'] = task_id
     response_data = {
