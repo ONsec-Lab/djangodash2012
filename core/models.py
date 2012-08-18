@@ -48,11 +48,6 @@ class Step(models.Model):
         code = open(code_path, 'r').read()
         return code
 
-
-class OurUser(models.Model):
-    def __unicode__(self):
-        return unicode(self.id)
-
 STATUS_CHOICES = (
     ('new', _('New')),
     ('created', _('Created')),
@@ -60,8 +55,11 @@ STATUS_CHOICES = (
 )
 
 
-class Inst(models.Model):
-    ouruser = models.ForeignKey(OurUser, verbose_name=_('User'), null=True)
+class Instance(models.Model):
+    session_key = models.CharField(_('User session key'), max_length=255)
     app = models.CharField(_('Heroku app id'), max_length=255, blank=True)
     status = models.CharField(_('Status'), max_length=10, default='new', choices=STATUS_CHOICES)
     url = models.CharField(_('URL'), max_length=255, blank=True)
+
+    def __unicode__(self):
+        return '%s' % self.app

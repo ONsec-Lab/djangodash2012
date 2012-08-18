@@ -12,14 +12,9 @@ class TutorialAdmin(admin.ModelAdmin):
     ]
 
 
-class OurUserAdmin(admin.ModelAdmin):
-    model = OurUser
-
-
-class InstAdmin(admin.ModelAdmin):
-    model = Inst
+class InstanceAdmin(admin.ModelAdmin):
+    model = Instance
 
 
 admin.site.register(Tutorial, TutorialAdmin)
-admin.site.register(Inst, InstAdmin)
-admin.site.register(OurUser, OurUserAdmin)
+admin.site.register(Instance, InstanceAdmin)

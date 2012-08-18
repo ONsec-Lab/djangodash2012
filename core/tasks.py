@@ -5,7 +5,7 @@ import heroku
 from celery import task
 from celery.result import AsyncResult
 
-from models import Inst
+from models import Instance
 from django.conf import settings
 
 
@@ -18,7 +18,7 @@ def ex(call):
 def setup_enviroment(session_key):
     # try to find env by session id,
     # if not - setup new
-    pass
+    create_instance(session_key)
 
 @task.task()
 def run_step(step, code):
@@ -28,16 +28,22 @@ def run_step(step, code):
     return 'successfuly finished\n'
 
 def get_task(id):
+    '''
+    Return task by id
+    TODO: define task structure in abstract class
+    '''
     return AsyncResult(id)
 
-def create_instance(user):
-    inst = Inst()
-    inst.save()
-    cloud = heroku.from_key(settings.HEROKU_KEY)
-    name = 'rocket-%s-%s' % (user.id, inst.id)
-    cloud.apps.add(name)
-    inst.app = name
-    inst.save()
+def create_instance(session_key):
+    try:
+        inst = Instance.objects.get(session_key=session_key)
+    except Instance.DoesNotExist:
+        inst = Instance()
+        cloud = heroku.from_key(settings.HEROKU_KEY)
+        name = 'rocket-%s-%s' % (session_key, inst.id)
+        cloud.apps.add(name)
+        inst.app = name
+        inst.save()
     return name
 
 
