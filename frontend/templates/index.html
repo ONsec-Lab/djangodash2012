@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 
 {% block container %}
-<div style="text-align:center">
-    <h1>Welcome to the Django Interactive Tutorial</h1>
-    <br>
-    <a href="{% url tutorial_start %}" class="btn btn-large btn-primary">Start tutorial</a>
-</div>
+<!-- <div style="text-align:center"> -->
+    <div class="page-header">
+        <h1>Welcome to the Django Interactive Tutorial</h1>
+    </div>
+    <p>This website is a set of interactive coding exercises to help you quickly learn how to benefit from Django and MVC.</p>
+
+    <p><a href="{% url tutorial_start %}" class="btn btn-large btn-primary">OK, take me to the first tutorial!</a></p>
+
+<!-- </div> -->
+
+<p>To <a href="https://www.djangoproject.com/download/">download Django</a>, or for <a href="https://docs.djangoproject.com/en/1.4/">full documentation</a>, see the project's <a href="https://djangoproject.com/">main site</a>.</p>
+
+
 {% endblock %}
