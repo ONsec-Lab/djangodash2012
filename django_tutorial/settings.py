@@ -120,6 +120,8 @@ INSTALLED_APPS = (
 
     'django_ace',
     'south',
+    'djcelery',
+    'djkombu',
 
     'frontend',
     'core'
@@ -157,6 +159,11 @@ LOGGING = {
 HEROKU_KEY = 'e8cfbdcb379b1051d4369d237b73f28702b917d5'
 TUTORIALS_PATH = project_path('../tutorials')
 REPOS_PATH = '~/repos'
+
+import djcelery
+djcelery.setup_loader()
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
 
 
 try:
