@@ -5,7 +5,7 @@ function Tutorial (config) {
     self.editor = ace.edit($('.django-ace-widget').get(0).firstChild);
     self.runButton = $('#tutorialRunButton');
     self.viewResultsButton = $('#viewResultsButton');
-    self.tutorialConsole = $('#tutorialConsole').jqconsole('Welcome to django tutorial console\n');
+    self.tutorialConsole = $('#tutorialConsole').jqconsole('Click to the Run button to execute your code\n');
     self.tutorialConsole.SetPromptText('ls');
     self.runButton.click(function () {
         if (self.runButton.hasClass('disabled')) {

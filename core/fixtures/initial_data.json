@@ -2,37 +2,31 @@
     "pk": 1,
     "model": "core.tutorial",
     "fields": {
+        "app_name": "hellodjango",
         "title": "django first tutorial"
     }
 }, {
     "pk": 1,
     "model": "core.step",
     "fields": {
-        "description": "enter number of django models",
-        "tutorial": 1,
+        "file_path": "models.py",
         "num": 1,
+        "description": "<p>In our simple poll app, we'll create two models: polls and choices. A poll has a question and a publication date. A choice has two fields: the text of the choice and a vote tally. Each choice is associated with a poll.</p>\r\n<p>\r\n<p>These concepts are represented by simple Python classes. </p>",
+        "tutorial": 1,
         "title": "Django models"
     }
-},
-{
-    "pk": 1, 
-    "model": "core.ouruser", 
-    "fields": {}
 }, {
-    "pk": 1, 
-    "model": "auth.user", 
+    "pk": 2,
+    "model": "core.step",
     "fields": {
-        "username": "admin", 
-        "first_name": "", 
-        "last_name": "", 
-        "is_active": true, 
-        "is_superuser": true, 
-        "is_staff": true, 
-        "last_login": "2012-08-18T11:04:40.467Z", 
-        "groups": [], 
-        "user_permissions": [], 
-        "password": "pbkdf2_sha256$10000$3JI6aBPotDed$jShe3bAVro5B4Z8C2YOOiOM7GMGbM68a7KtKSwT50m8=", 
-        "email": "limpbrains@mail.ru", 
-        "date_joined": "2012-08-18T11:04:34.046Z"
+        "file_path": "urls.py",
+        "num": 2,
+        "description": "Some urls tutorial",
+        "tutorial": 1,
+        "title": "Django urls"
     }
+}, {
+    "pk": 1,
+    "model": "core.ouruser",
+    "fields": {}
 }]

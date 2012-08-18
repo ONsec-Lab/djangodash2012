@@ -9,7 +9,7 @@
             <a href="{{ results_url }}" class="btn btn-large hide" id="viewResultsButton">View results</a>
         </div>
         <div class="step-description">
-            {{ step.description }}
+            {{ step.description|safe }}
         </div>
     </div>
     <div class="span6">
