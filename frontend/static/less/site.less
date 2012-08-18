@@ -3,6 +3,36 @@
 .page-header {
     position: relative;
 }
+
+// allow bootstrap resize more
+
+#resultsWindow {
+    height: 90%;
+    top: 5%;
+    width: 90%;
+    left: 5%;
+    margin:0;
+    // background: #eee;
+
+    .modal-header {
+    }
+
+    .modal-body {
+        max-height: 100%;
+    }
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+}
+
+#viewResultsButton {
+    position: absolute;
+    top: 0;
+    right: 100px;
+}
 #tutorialRunButton {
     position: absolute;
     top:0;

@@ -17,7 +17,16 @@ function Tutorial (config) {
         self.runButton.addClass('disabled');
         self.sendCode(code);
     });
+
+    self.viewResultsButton.click(function () {
+        self.displayResults();
+    });
 }
+
+Tutorial.prototype.displayResults = function () {
+    var self = this;
+    $('#resultsWindow').modal('show');
+};
 
 Tutorial.prototype.getStepUrl = function () {
     var self = this;

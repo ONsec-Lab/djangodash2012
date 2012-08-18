@@ -28,7 +28,7 @@ class Step(models.Model):
         """
         Returl url to results for current user
         """
-        return '#'
+        return 'http://172.16.240.130:8000/admin';
 
     def get_code(self):
         code_path = path.join(settings.TUTORIALS_PATH,
