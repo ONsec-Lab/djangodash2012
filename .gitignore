@@ -1,4 +1,5 @@
 env
+celerybeat-schedule
 *.pyc
 django_tutorial/local_settings.py
 devel.db
