@@ -59,6 +59,7 @@ def tutorial_step(request, tutorial_id, step_id):
 def tutorial_step_run(request, tutorial_id, step_id):
     '''
     Run user code
+    Returns task id, that run user code
     '''
     if not request.is_ajax() or request.method != 'POST':
         raise Http404()
@@ -69,8 +70,22 @@ def tutorial_step_run(request, tutorial_id, step_id):
     except (KeyError, ValueError) as e:
         raise Http404()
     # task_id = step.run(code)
-    task_id = 0
+    task_id = 1
+    request.sessions.get['task_id'] = task_id
     response_data = {
         'task_id': task_id
     }
     return HttpResponse(json.dumps(response_data), mimetype="application/json")
+
+def check_task_status(request, task_id):
+    '''
+    Check runned task status
+    '''
+    # sequrity check
+    if request.sessions.get('task_id') != task_id:
+        raise Http404()
+    # task = get by id
+    task = {
+        'status': 'running'
+    }
+    return HttpResponse(json.dumps(task), mimetype="application/json")

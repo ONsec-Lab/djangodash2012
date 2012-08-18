@@ -18,10 +18,15 @@ Tutorial.prototype.sendCode = function (code) {
         data: code,
         dataType: "json",
         success: function (data, textStatus, xhr) {
-            console.log('success', arguments);
-        },
-        failure: function () {
-            console.log('failure', arguments);
+            self.waitTask(data.task_id, self.whenTaskFinish.bind(self));
         }
     });
+};
+
+Tutorial.prototype.waitTask = function (task_id) {
+    var self = this;
+};
+
+Tutorial.prototype.whenTaskFinish = function (task) {
+    var self = this;
 };
