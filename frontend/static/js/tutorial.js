@@ -6,7 +6,6 @@ function Tutorial (config) {
     self.runButton = $('#tutorialRunButton');
     self.viewResultsButton = $('#viewResultsButton');
     self.tutorialConsole = $('#tutorialConsole').jqconsole('Click to the Run button to execute your code\n');
-    self.tutorialConsole.SetPromptText('ls');
     self.runButton.click(function () {
         if (self.runButton.hasClass('disabled')) {
             return false;
@@ -52,7 +51,7 @@ Tutorial.prototype.getTask = function (task_id) {
             if (data.console) {
                 self.console(data.console);
             }
-            if (data.status !== 'running') {
+            if (!data.running) {
                 self.whenTaskFinish(data);
             } else {
                 setTimeout(function () {

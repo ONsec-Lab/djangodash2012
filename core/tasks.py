@@ -1,6 +1,10 @@
 import os
+import time
 
 import heroku
+from celery import task
+from celery.result import AsyncResult
+
 from models import Inst
 from django.conf import settings
 
@@ -10,6 +14,21 @@ def ex(call):
     if num:
         raise Exception('!!!!!!!!!')
 
+@task.task()
+def setup_enviroment(session_key):
+    # try to find env by session id,
+    # if not - setup new
+    pass
+
+@task.task()
+def run_step(step, code):
+    for x in range(0, 10):
+        print 'Run code...'
+        time.sleep(1)
+    return 'successfuly finished\n'
+
+def get_task(id):
+    return AsyncResult(id)
 
 def create_instance(user):
     inst = Inst()

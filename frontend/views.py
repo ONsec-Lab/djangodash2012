@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 
+from core.tasks import setup_enviroment, run_step, get_task
 from core.models import Tutorial, Step
 from forms import EditorForm
 
@@ -22,6 +23,7 @@ def tutorial_start(request):
     if tutorial_id is None:
         tutorial_id = Tutorial.objects.filter()[0].pk
     # TODO: run task to prepare enviroment
+    setup_enviroment.delay(request.session.session_key)
     return redirect('tutorial', tutorial_id=tutorial_id)
 
 def tutorial(request, tutorial_id):
@@ -82,11 +84,10 @@ def tutorial_step_run(request, tutorial_id, step_num):
     except (KeyError, ValueError) as e:
         print e
         raise Http404()
-    # task_id = step.run(code)
-    task_id = 1
-    request.session['task_id'] = task_id
+    res = run_step.delay(step, code)
+    request.session['task_id'] = res.id
     response_data = {
-        'task_id': task_id
+        'task_id': res.id
     }
     return HttpResponse(json.dumps(response_data), mimetype="application/json")
 
@@ -95,15 +96,13 @@ def task(request, task_id):
     Check runned task status
     '''
     # sequrity check
-    try:
-        task_id = int(task_id)
-    except ValueError:
-        raise Http404
     if request.session.get('task_id') != task_id:
         raise Http404()
+    task = get_task(task_id)
     # task = get by id
-    task = {
-        'status': 'running',
-        'console': 'bla-bla-bla\n'
+    task_json = {
+        'running': not task.ready()
     }
-    return HttpResponse(json.dumps(task), mimetype="application/json")
+    if task.ready():
+        task_json['console'] = task.get()
+    return HttpResponse(json.dumps(task_json), mimetype="application/json")
