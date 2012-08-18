@@ -37,3 +37,4 @@ class Inst(models.Model):
     ouruser = models.ForeignKey(OurUser, verbose_name=_('User'), null=True)
     app = models.CharField(_('Heroku app id'), max_length=255, blank=True)
     status = models.CharField(_('Status'), max_length=10, default='new', choices=STATUS_CHOICES)
+    url = models.CharField(_('URL'), max_length=255, blank=True)

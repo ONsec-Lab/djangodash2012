@@ -1,0 +1,38 @@
+[{
+    "pk": 1,
+    "model": "core.tutorial",
+    "fields": {
+        "title": "django first tutorial"
+    }
+}, {
+    "pk": 1,
+    "model": "core.step",
+    "fields": {
+        "description": "enter number of django models",
+        "tutorial": 1,
+        "num": 1,
+        "title": "Django models"
+    }
+},
+{
+    "pk": 1, 
+    "model": "core.ouruser", 
+    "fields": {}
+}, {
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "ivanadmin", 
+        "first_name": "", 
+        "last_name": "", 
+        "is_active": true, 
+        "is_superuser": true, 
+        "is_staff": true, 
+        "last_login": "2012-08-18T11:04:40.467Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$10000$3JI6aBPotDed$jShe3bAVro5B4Z8C2YOOiOM7GMGbM68a7KtKSwT50m8=", 
+        "email": "limpbrains@mail.ru", 
+        "date_joined": "2012-08-18T11:04:34.046Z"
+    }
+}]

@@ -154,6 +154,8 @@ LOGGING = {
     }
 }
 
+HEROKU_KEY = 'e8cfbdcb379b1051d4369d237b73f28702b917d5'
+
 try:
     from local_settings import *
 except:
