@@ -15,10 +15,12 @@ def ex(call):
         raise Exception('!!!!!!!!!')
 
 @task.task()
-def setup_enviroment(session_key):
+def setup_enviroment(session_key, tutorial_id):
     # try to find env by session id,
     # if not - setup new
-    create_instance(session_key)
+    inst = create_instance(session_key)
+    init_git(inst)
+    init_tutorial(inst, tutorial_id)
 
 @task.task()
 def run_step(step, code):
@@ -35,16 +37,19 @@ def get_task(id):
     return AsyncResult(id)
 
 def create_instance(session_key):
-    try:
-        inst = Instance.objects.get(session_key=session_key)
-    except Instance.DoesNotExist:
-        inst = Instance()
+    '''
+    Create heroku instance
+    '''
+    inst, created = Instance.objects.get_or_create(session_key=session_key)
+    if not inst.app:
         cloud = heroku.from_key(settings.HEROKU_KEY)
-        name = 'rocket-%s-%s' % (session_key, inst.id)
+        name = 'rocket-%s' % (inst.id)
+        print name
         cloud.apps.add(name)
         inst.app = name
         inst.save()
-    return name
+    print inst.app, created
+    return inst.app
 
 
 def init_git(inst):
