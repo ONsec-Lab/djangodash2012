@@ -6,6 +6,7 @@ function Tutorial (config) {
     self.runButton = $('#tutorialRunButton');
     self.viewResultsButton = $('#viewResultsButton');
     self.tutorialConsole = $('#tutorialConsole').jqconsole('Click to the Run button to execute your code\n');
+    self.tutorialNextButton = $('#tutorialNextButton');
 
     self.runButton.click(function () {
         if (self.runButton.hasClass('disabled')) {
@@ -90,6 +91,8 @@ Tutorial.prototype.whenTaskFinish = function (task) {
         return displayError('Error, during run your code');
     } else {
         self.viewResultsButton.removeClass('hide');
+        self.runButton.addClass('hide');
+        self.tutorialNextButton.removeClass('hide');
     }
 };
 

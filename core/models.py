@@ -25,10 +25,20 @@ class Step(models.Model):
         return u'%s' % unicode(self.title)
 
     def get_results_url(self, request):
-        """
+        '''
         Returl url to results for current user
-        """
+        '''
         return 'http://172.16.240.130:8000/admin';
+
+    def get_next_num(self):
+        '''
+        Returns url to the next step,
+        if tutorial finished - return url to finish step
+        '''
+        next_num = self.num + 1
+        if next_num > self.tutorial.steps_count():
+            return None
+        return next_num
 
     def get_code(self):
         code_path = path.join(settings.TUTORIALS_PATH,

@@ -1,5 +1,6 @@
 import json
 
+from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect, get_object_or_404
@@ -56,13 +57,34 @@ def tutorial_step(request, tutorial_id, step_num):
     initial = {
         'code': step.get_code()
     }
+
+    next_num = step.get_next_num()
+    if next_num is None:
+        next_url = reverse('tutorial_finish', kwargs={
+            'tutorial_id': tutorial_id
+        })
+    else:
+        next_url = reverse('tutorial_step', kwargs={
+            'tutorial_id': tutorial_id,
+            'step_num': next_num
+        })
     return render_to_response('tutorial.html', {
             'tutorial': tutorial,
             'step': step,
             'results_url': step.get_results_url(request),
+            'next_url': next_url,
             'editor_form': EditorForm(initial=initial)
         },
         context_instance=RequestContext(request))
+
+def tutorial_finish(request, tutorial_id):
+    '''
+    Display finish page for tutorial
+    '''
+    tutorial = get_object_or_404(Tutorial, pk=tutorial_id)
+    return render_to_response('tutorial_finish.html', {
+        'tutorial': tutorial
+    }, context_instance=RequestContext(request))
 
 @ensure_csrf_cookie
 @csrf_protect

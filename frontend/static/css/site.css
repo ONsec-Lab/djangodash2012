@@ -30,6 +30,7 @@ body {
   right: 100px;
 }
 
+#tutorialNextButton,
 #tutorialRunButton {
   position: absolute;
   top: 0;
