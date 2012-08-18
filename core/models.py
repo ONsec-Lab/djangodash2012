@@ -14,7 +14,6 @@ class Tutorial(models.Model):
     def steps_count(self):
         return self.step_set.all().count()
 
-
 class Step(models.Model):
     title = models.CharField(_('Title'), max_length=255)
     num = models.SmallIntegerField(_('Number in Order'))
@@ -24,6 +23,12 @@ class Step(models.Model):
 
     def __unicode__(self):
         return u'%s' % unicode(self.title)
+
+    def get_results_url(self, request):
+        """
+        Returl url to results for current user
+        """
+        return '#'
 
     def get_code(self):
         code_path = path.join(settings.TUTORIALS_PATH,

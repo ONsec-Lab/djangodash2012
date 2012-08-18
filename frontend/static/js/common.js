@@ -1,14 +1,18 @@
+function displayError (e) {
+    $('.alert').remove();
+    $('#mainContainer').prepend('<div class="row">'
+        +'<div id="stepAlert" class="alert alert-block alert-error fade in">'
+            +'<button type="button" class="close" data-dismiss="alert">×</button>'
+            +'<h4 class="alert-heading">Oh snap! You got an error!</h4>'
+            +'<p>' + e + '</p>'
+        +'</div>'
+    +'</div>');
+    $('.alert').alert();
+}
+
 jQuery.ajaxSetup({
     error: function (r, s, e) {
-        $('.alert').remove();
-        $('#mainContainer').prepend('<div class="row">'
-            +'<div id="stepAlert" class="alert alert-block alert-error fade in">'
-                +'<button type="button" class="close" data-dismiss="alert">×</button>'
-                +'<h4 class="alert-heading">Oh snap! You got an error!</h4>'
-                +'<p>' + e + '</p>'
-            +'</div>'
-        +'</div>');
-        $('.alert').alert();
+        displayError(e)
     }
 });
 

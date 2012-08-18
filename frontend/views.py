@@ -57,6 +57,7 @@ def tutorial_step(request, tutorial_id, step_num):
     return render_to_response('tutorial.html', {
             'tutorial': tutorial,
             'step': step,
+            'results_url': step.get_results_url(request),
             'editor_form': EditorForm(initial=initial)
         },
         context_instance=RequestContext(request))
@@ -102,6 +103,7 @@ def task(request, task_id):
         raise Http404()
     # task = get by id
     task = {
-        'status': 'running'
+        'status': 'running',
+        'console': 'bla-bla-bla\n'
     }
     return HttpResponse(json.dumps(task), mimetype="application/json")

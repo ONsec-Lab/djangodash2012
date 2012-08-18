@@ -3,11 +3,11 @@
 {% block container %}
 {% csrf_token %}
 <div class="row">
-    <div class="span6">
-        <h1> Step {{ step.num }} of {{ tutorial.steps_count }}: {{ step.title }}</h1>
-        <br>
-        <a href="#" class="btn btn-large">View results</a>
-        <br><br>
+    <div class="span6 step-info">
+        <h1>Step {{ step.num }} of {{ tutorial.steps_count }}: {{ step.title }}</h1>
+        <div>
+            <a href="{{ results_url }}" class="btn btn-large hide" id="viewResultsButton">View results</a>
+        </div>
         <div class="step-description">
             {{ step.description }}
         </div>
@@ -20,6 +20,7 @@
             <button class="btn btn-success btn-large"  id="tutorialRunButton"><i class="icon-play icon-white"></i> Run</button>
         </div>
         <div class="step-console">
+            <div  id="tutorialConsole"></div>
         </div>
     </div>
 </div>
@@ -28,6 +29,8 @@
 {% block media_extra %}
     {{ block.super }}
     {{ editor_form.media }}
+    <link href="{{ STATIC_URL }}css/ansi.css" rel="stylesheet">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jqconsole-2.7.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/tutorial.js"></script>
     <script type="text/javascript">
         var tutorial;

@@ -4,8 +4,9 @@ function Tutorial (config) {
     self.currentStep = config.step;
     self.editor = ace.edit($('.django-ace-widget').get(0).firstChild);
     self.runButton = $('#tutorialRunButton');
-    self.progressBar = $('#progressBar');
-
+    self.viewResultsButton = $('#viewResultsButton');
+    self.tutorialConsole = $('#tutorialConsole').jqconsole('Welcome to django tutorial console\n');
+    self.tutorialConsole.SetPromptText('ls');
     self.runButton.click(function () {
         if (self.runButton.hasClass('disabled')) {
             return false;
@@ -27,7 +28,6 @@ Tutorial.prototype.sendCode = function (code) {
     var data = {
         code: code
     };
-    console.log(self.getStepUrl() + 'run/');
     $.ajax(self.getStepUrl() + 'run/', {
         type: 'POST',
         data: JSON.stringify(data),
@@ -38,12 +38,20 @@ Tutorial.prototype.sendCode = function (code) {
     });
 };
 
+Tutorial.prototype.console = function (message) {
+    var self = this;
+    self.tutorialConsole.Write(message, 'jqconsole-output');
+}
+
 Tutorial.prototype.getTask = function (task_id) {
     var self = this;
     $.ajax('/task/' + task_id + '/', {
         type: 'GET',
         dataType: "json",
         success: function (data, textStatus, xhr) {
+            if (data.console) {
+                self.console(data.console);
+            }
             if (data.status !== 'running') {
                 self.whenTaskFinish(data);
             } else {
@@ -60,8 +68,22 @@ Tutorial.prototype.waitTask = function (task_id) {
     self.getTask(task_id);
 };
 
+/**
+ * when task finish - check if there any errors,
+ * if no display view results and next buttons
+ */
 Tutorial.prototype.whenTaskFinish = function (task) {
     var self = this;
     self.runButton.removeClass('loading');
     self.runButton.removeClass('disabled');
+    if (task.errors) {
+        return displayError('Error, during run your code');
+    } else {
+        self.viewResultsButton.removeClass('hide');
+    }
+};
+
+Tutorial.prototype.displayErrors = function (errors) {
+    var self = this;
+    self.errorsBlock.show();
 };
