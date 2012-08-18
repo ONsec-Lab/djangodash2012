@@ -6,3 +6,4 @@ psycopg2==2.4.5
 South==0.7.6
 heroku
 django_celery==3.0.6
+django-kombu
