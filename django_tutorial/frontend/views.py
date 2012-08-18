@@ -34,7 +34,7 @@ def tutorial(request, tutorial_id):
     tutorial_step = request.session.get('tutorial_step')
     if tutorial_step is None:
         tutorial_step = 1 # default task_id
-    return redirect('tutorial_step', tutorial_id=tutorial_id, step=tutorial_step)
+    return redirect('tutorial_step', tutorial_id=tutorial_id, step_id=tutorial_step)
 
 def tutorial_step(request, tutorial_id, step_id):
     request.session['tutorial_id'] = tutorial_id
