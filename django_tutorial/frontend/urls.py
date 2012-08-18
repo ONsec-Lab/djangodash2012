@@ -3,7 +3,8 @@ from django.conf.urls import patterns, include, url
 from views import *
 
 urlpatterns = patterns('',
-    url(r'', index, name='index'),
+    url(r'^$', index, name='index'),
+    url(r'^start/$', tutorial_start, name='tutorial_start')
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

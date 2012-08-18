@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
 {% block container %}
-    <button class="btn">Start tutorial</button>
+<div style="text-align:center">
+    <h1>Welcome to the Django Interactive Tutorial</h1>
+    <br>
+    <a href="{% url tutorial_start %}" class="btn btn-large btn-primary">Start tutorial</a>
+</div>
 {% endblock %}
