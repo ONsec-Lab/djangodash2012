@@ -2,9 +2,10 @@ import json
 
 from django.http import Http404, HttpResponse
 from django.template import RequestContext
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 
+from core.models import Tutorial, Step
 from forms import EditorForm
 
 def index(request):
@@ -19,7 +20,8 @@ def tutorial_start(request):
     '''
     tutorial_id = request.session.get('tutorial_id')
     if tutorial_id is None:
-        tutorial_id = 1
+        tutorial_id = Tutorial.objects.filter()[0].pk
+    # TODO: run task to prepare enviroment
     return redirect('tutorial', tutorial_id=tutorial_id)
 
 def tutorial(request, tutorial_id):
@@ -28,12 +30,13 @@ def tutorial(request, tutorial_id):
         check if user already run tutorial and stop on some task_id
         redirect to task page
     '''
+    tutorial = get_object_or_404(Tutorial, pk=tutorial_id)
     # TODO: get tutorial
     request.session['tutorial_id'] = tutorial_id
     # store task id in sessions
     tutorial_step = request.session.get('tutorial_step')
     if tutorial_step is None:
-        tutorial_step = 1 # default task_id
+        tutorial_step = tutorial.step_set.all()[0].pk # default step_id
     return redirect('tutorial_step', tutorial_id=tutorial_id, step_id=tutorial_step)
 
 def tutorial_step(request, tutorial_id, step_id):
@@ -43,8 +46,11 @@ def tutorial_step(request, tutorial_id, step_id):
     request.session['tutorial_id'] = tutorial_id
     request.session['tutorial_step'] = step_id
 
-    tutorial = Tutorial.objects.get(pk=tutorial_id)
-    tutorial.steps.get(step_id)
+    tutorial = get_object_or_404(Tutorial, pk=tutorial_id)
+    try:
+        step = tutorial.step_set.get(pk=step_id)
+    except Step.DoesNotExist as e:
+        raise Http404()
     return render_to_response('tutorial.html', {
             'tutorial': tutorial,
             'step': step,
