@@ -39,7 +39,7 @@ def tutorial(request, tutorial_id):
     # store task id in sessions
     tutorial_step_num = request.session.get('tutorial_step_num')
     if tutorial_step_num is None:
-        tutorial_step_num = tutorial.step_set.get(num=1) # first step in tutorial
+        tutorial_step_num = 1 # first step in tutorial
     return redirect('tutorial_step', tutorial_id=tutorial_id, step_num=tutorial_step_num)
 
 def tutorial_step(request, tutorial_id, step_num):
