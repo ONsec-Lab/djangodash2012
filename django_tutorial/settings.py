@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'django_ace',
+    'south',
 
     'frontend',
     'core'

@@ -10,6 +10,7 @@ class Tutorial(models.Model):
     def steps_count(self):
         return self.step_set.all().count()
 
+
 class Step(models.Model):
     title = models.CharField('Title', max_length=255)
     num = models.SmallIntegerField('Number in Order')
