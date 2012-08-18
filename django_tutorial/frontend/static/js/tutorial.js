@@ -1,5 +1,7 @@
-function Tutorial () {
+function Tutorial (config) {
     var self = this;
+    self.id = config.id;
+    self.currentStep = config.step;
     self.editor = ace.edit($('.django-ace-widget').get(0).firstChild);
     self.runButton = $('#tutorialRunButton');
 
@@ -11,7 +13,7 @@ function Tutorial () {
 
 Tutorial.prototype.sendCode = function (code) {
     var self = this;
-    $.ajax("/api/code/", {
+    $.ajax('/tutorial/' + self.id + '/' + self.currentStep + '/run/', {
         type: "POST",
         data: code,
         dataType: "json",
@@ -23,8 +25,3 @@ Tutorial.prototype.sendCode = function (code) {
         }
     });
 };
-
-
-$(function () {
-    var tutorial = new Tutorial();
-});
