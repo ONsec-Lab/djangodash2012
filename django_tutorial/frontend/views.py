@@ -72,16 +72,17 @@ def tutorial_step_run(request, tutorial_id, step_id):
         data = json.loads(request.raw_post_data)
         code = data['code']
     except (KeyError, ValueError) as e:
+        print e
         raise Http404()
     # task_id = step.run(code)
     task_id = 1
-    request.sessions.get['task_id'] = task_id
+    request.session['task_id'] = task_id
     response_data = {
         'task_id': task_id
     }
     return HttpResponse(json.dumps(response_data), mimetype="application/json")
 
-def check_task_status(request, task_id):
+def task(request, task_id):
     '''
     Check runned task status
     '''
