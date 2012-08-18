@@ -37,16 +37,14 @@ def tutorial(request, tutorial_id):
     return redirect('tutorial_step', tutorial_id=tutorial_id, step_id=tutorial_step)
 
 def tutorial_step(request, tutorial_id, step_id):
+    '''
+    Tutorial step
+    '''
     request.session['tutorial_id'] = tutorial_id
     request.session['tutorial_step'] = step_id
-    # tutorial = ...
-    tutorial = {
-        'id': 1
-    }
-    # step = ...
-    step = {
-        'id': 1
-    }
+
+    tutorial = Tutorial.objects.get(pk=tutorial_id)
+    tutorial.steps.get(step_id)
     return render_to_response('tutorial.html', {
             'tutorial': tutorial,
             'step': step,
