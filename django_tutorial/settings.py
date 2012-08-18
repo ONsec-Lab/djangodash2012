@@ -156,6 +156,7 @@ LOGGING = {
 
 HEROKU_KEY = 'e8cfbdcb379b1051d4369d237b73f28702b917d5'
 TUTORIALS_PATH = project_path('../tutorials')
+REPOS_PATH = '~/repos'
 
 
 try:
