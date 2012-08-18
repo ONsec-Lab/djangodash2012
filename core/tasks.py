@@ -9,6 +9,8 @@ from celery.result import AsyncResult
 from models import Instance
 from django.conf import settings
 
+# connect to heroku
+cloud = heroku.from_key(settings.HEROKU_KEY)
 
 def ex(call):
     num = os.system(call)
@@ -45,11 +47,10 @@ def get_instance(session_key):
     '''
     logger = create_instance.get_logger()
     logger.info('Find heroku instance for session_key: %s' % session_key)
-
     try:
         inst = Instance.objects.get(session_key=session_key)
-        cloud = heroku.from_key(settings.HEROKU_KEY)
-        if cloud.apps.get(inst.app).status == 'new':
+        app = cloud.apps.get(inst.app)
+        if not app:
             inst.delete()
             raise Instance.DoesNotExist()
     except Instance.DoesNotExist:
@@ -64,7 +65,6 @@ def create_instance(session_key):
     '''
     logger = create_instance.get_logger()
     logger.info('Create heroku instance for session_key: %s' % session_key)
-    cloud = heroku.from_key(settings.HEROKU_KEY)
     inst = Instance.objects.create(session_key=session_key)
     name = 'rocket-%s' % (inst.id)
     logger.info('Create heroku instance for session_key: %s, name: %s' % (session_key, name))
