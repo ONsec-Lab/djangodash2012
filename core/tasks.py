@@ -50,3 +50,4 @@ def init_tutorial(inst, tutid):
     ex('cp -r %(bp)s/* %(ap)s' % locals())
     ex('cd %(ap)s; git add .; git commit -m "%(tutid)s"' % locals())
     ex('cd %(ap)s; git push heroku master' % locals())
+

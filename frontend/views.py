@@ -51,10 +51,13 @@ def tutorial_step(request, tutorial_id, step_id):
         step = tutorial.step_set.get(pk=step_id)
     except Step.DoesNotExist as e:
         raise Http404()
+    initial = {
+        'code': step.get_code()
+    }
     return render_to_response('tutorial.html', {
             'tutorial': tutorial,
             'step': step,
-            'editor_form': EditorForm()
+            'editor_form': EditorForm(initial=initial)
         },
         context_instance=RequestContext(request))
 
@@ -74,7 +77,7 @@ def tutorial_step_run(request, tutorial_id, step_id):
     except (KeyError, ValueError) as e:
         print e
         raise Http404()
-    # task_id = step.run(code)
+    task_id = step.run(code)
     task_id = 1
     request.session['task_id'] = task_id
     response_data = {

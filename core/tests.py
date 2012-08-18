@@ -12,15 +12,6 @@ from models import OurUser, Inst
 from tasks import create_instance, init_tutorial
 from django.conf import settings
 
-
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
-
-
 class HerokuTest(TestCase):
     def setUp(self):
         self.cloud = heroku.from_key(settings.HEROKU_KEY)

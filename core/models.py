@@ -1,9 +1,12 @@
+from os import path
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 
 class Tutorial(models.Model):
     title = models.CharField(_('Title'), max_length=255)
+    app_name = models.CharField(_('Django Application Name'), max_length=255, default='hellodjango')
 
     def __unicode__(self):
         return u'%s' % unicode(self.title)
@@ -17,9 +20,18 @@ class Step(models.Model):
     num = models.SmallIntegerField(_('Number in Order'))
     tutorial = models.ForeignKey(Tutorial)
     description = models.TextField(_('Description'))
+    file_path = models.CharField(_('File Path'), max_length=255, null=True, blank=True)
 
     def __unicode__(self):
         return u'%s' % unicode(self.title)
+
+    def get_code(self):
+        code_path = path.join(settings.TUTORIALS_PATH,
+            str(self.tutorial.pk),
+            self.tutorial.app_name,
+            self.file_path)
+        code = open(code_path, 'r').read()
+        return code
 
 
 class OurUser(models.Model):

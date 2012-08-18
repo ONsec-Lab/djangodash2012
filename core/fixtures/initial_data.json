@@ -22,7 +22,7 @@
     "pk": 1, 
     "model": "auth.user", 
     "fields": {
-        "username": "ivanadmin", 
+        "username": "admin", 
         "first_name": "", 
         "last_name": "", 
         "is_active": true, 
