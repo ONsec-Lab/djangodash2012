@@ -118,7 +118,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
 
-    'kombu.transport.django',
     'djcelery',
     'django_ace',
     'south',
