@@ -8,6 +8,7 @@
     <button class="btn btn-success btn-large"  id="tutorialRunButton"><i class="icon-play icon-white"></i> Run</button>
     <a href="{{ next_url }}" class="btn btn-success btn-large hide" id="tutorialNextButton"><i class="icon-arrow-right icon-white"></i> Next</a>
 </div>
+<!-- result modal dialog -->
 <div class="modal hide" id="resultsWindow">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>
@@ -17,6 +18,7 @@
     <iframe src="{{ results_url }}"></iframe>
   </div>
 </div>
+<!-- end -->
 
 <div class="row">
     <div class="span6 step-info">
@@ -26,10 +28,8 @@
     </div>
     <div class="span6">
         <div class="step-editor">
-            {{ editor_form }}
-        </div>
-        <div class="step-run-buttons">
-            <!-- <button class="btn btn-success btn-large"  id="tutorialRunButton"><i class="icon-play icon-white"></i> Run</button> -->
+            <div class="step-file">{{ step.file_path }}</div>
+            {{ editor_form.code }}
         </div>
         <div class="step-console">
             <div  id="tutorialConsole"></div>
