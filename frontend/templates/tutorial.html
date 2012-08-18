@@ -2,9 +2,12 @@
 
 {% block container %}
 {% csrf_token %}
+<div class="page-header">
+    <h1>Step {{ step.num }} of {{ tutorial.steps_count }}: {{ step.title }}</h1>
+    <button class="btn btn-success btn-large"  id="tutorialRunButton"><i class="icon-play icon-white"></i> Run</button>
+</div>
 <div class="row">
     <div class="span6 step-info">
-        <h1>Step {{ step.num }} of {{ tutorial.steps_count }}: {{ step.title }}</h1>
         <div>
             <a href="{{ results_url }}" class="btn btn-large hide" id="viewResultsButton">View results</a>
         </div>
@@ -17,7 +20,7 @@
             {{ editor_form }}
         </div>
         <div class="step-run-buttons">
-            <button class="btn btn-success btn-large"  id="tutorialRunButton"><i class="icon-play icon-white"></i> Run</button>
+            <!-- <button class="btn btn-success btn-large"  id="tutorialRunButton"><i class="icon-play icon-white"></i> Run</button> -->
         </div>
         <div class="step-console">
             <div  id="tutorialConsole"></div>

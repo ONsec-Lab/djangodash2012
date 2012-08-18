@@ -6,10 +6,12 @@ function Tutorial (config) {
     self.runButton = $('#tutorialRunButton');
     self.viewResultsButton = $('#viewResultsButton');
     self.tutorialConsole = $('#tutorialConsole').jqconsole('Click to the Run button to execute your code\n');
+
     self.runButton.click(function () {
         if (self.runButton.hasClass('disabled')) {
             return false;
         }
+        self.tutorialConsole.Write('Executing your code...\n');
         var code = self.editor.getValue();
         self.runButton.addClass('loading');
         self.runButton.addClass('disabled');
