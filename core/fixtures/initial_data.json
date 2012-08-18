@@ -25,8 +25,4 @@
         "tutorial": 1,
         "title": "Django urls"
     }
-}, {
-    "pk": 1,
-    "model": "core.ouruser",
-    "fields": {}
 }]

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Tutorial, Step, Inst, OurUser
+from core.models import Tutorial, Step, Instance
 
 
 class StepInline(admin.TabularInline):
