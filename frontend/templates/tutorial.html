@@ -4,7 +4,7 @@
 {% csrf_token %}
 <div class="page-header">
     <h1>Step {{ step.num }} of {{ tutorial.steps_count }}: {{ step.title }}</h1>
-    <button class="btn btn-large btn-primary" id="viewResultsButton">View results</button>
+    <button class="btn btn-large btn-primary hide" id="viewResultsButton">View results</button>
     <button class="btn btn-success btn-large"  id="tutorialRunButton"><i class="icon-play icon-white"></i> Run</button>
 </div>
 <div class="modal hide" id="resultsWindow">
@@ -14,10 +14,6 @@
   </div>
   <div class="modal-body">
     <iframe src="{{ results_url }}"></iframe>
-  </div>
-  <div class="modal-footer">
-    <!-- <a href="#" class="btn" data-dismiss="modal">Close</a> -->
-<!--     <a href="#" class="btn btn-primary">Save changes</a> -->
   </div>
 </div>
 
