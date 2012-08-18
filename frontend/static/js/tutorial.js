@@ -17,12 +17,18 @@ function Tutorial (config) {
     });
 }
 
+Tutorial.prototype.getStepUrl = function () {
+    var self = this;
+    return '/tutorial/' + self.id + '/' + self.currentStep + '/';
+};
+
 Tutorial.prototype.sendCode = function (code) {
     var self = this;
     var data = {
         code: code
     };
-    $.ajax('/tutorial/' + self.id + '/' + self.currentStep + '/run/', {
+    console.log(self.getStepUrl() + 'run/');
+    $.ajax(self.getStepUrl() + 'run/', {
         type: 'POST',
         data: JSON.stringify(data),
         dataType: "json",
@@ -34,16 +40,17 @@ Tutorial.prototype.sendCode = function (code) {
 
 Tutorial.prototype.getTask = function (task_id) {
     var self = this;
-    $.ajax('/tutorial/', {
+    $.ajax('/task/' + task_id + '/', {
         type: 'GET',
         dataType: "json",
         success: function (data, textStatus, xhr) {
-            if (data.status === 'running') {
+            if (data.status !== 'running') {
                 self.whenTaskFinish(data);
+            } else {
+                setTimeout(function () {
+                    self.getTask(task_id);
+                }, 3000);
             }
-            setTimeout(function () {
-                self.getTask(task_id);
-            }, 3000);
         }
     });
 }

@@ -94,7 +94,11 @@ def task(request, task_id):
     Check runned task status
     '''
     # sequrity check
-    if request.sessions.get('task_id') != task_id:
+    try:
+        task_id = int(task_id)
+    except ValueError:
+        raise Http404
+    if request.session.get('task_id') != task_id:
         raise Http404()
     # task = get by id
     task = {

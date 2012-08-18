@@ -30,10 +30,11 @@
     {{ editor_form.media }}
     <script type="text/javascript" src="{{ STATIC_URL }}js/tutorial.js"></script>
     <script type="text/javascript">
+        var tutorial;
         $(function () {
-            var tutorial = new Tutorial({
+            tutorial = new Tutorial({
                 id: {{tutorial.id}},
-                step: {{step.id}},
+                step: {{step.num}},
             });
         });
     </script>
