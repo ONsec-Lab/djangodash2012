@@ -141,5 +141,8 @@ def task(request, task_id):
         'running': not task.ready()
     }
     if task.ready():
-        task_json['results'] = task.get()
+        try:
+            task_json['results'] = task.get()
+        except:
+            task_json['errors'] = True
     return HttpResponse(json.dumps(task_json), mimetype="application/json")

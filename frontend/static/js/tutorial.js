@@ -77,8 +77,7 @@ Tutorial.prototype.sendCode = function (code) {
         success: function (data, textStatus, xhr) {
             self.waitTask(data.task_id, function (data) {
                 if (!data.running) {
-                    self.log(data.results);
-                    self.whenTaskFinish.bind(self)
+                    self.whenTaskFinish(data);
                 }
             });
         }
@@ -101,6 +100,7 @@ Tutorial.prototype.waitTask = function (task_id, callback) {
  */
 Tutorial.prototype.whenTaskFinish = function (task) {
     var self = this;
+    self.log(task.results);
     self.runButton.removeClass('loading');
     self.runButton.removeClass('disabled');
     if (task.errors) {
