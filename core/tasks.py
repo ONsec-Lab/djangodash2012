@@ -41,7 +41,11 @@ def run_step(session_key, step, code):
     if errors:
         return errors
     else:
-        commit_instance(inst, 'Commit tutorial %s, step num %s' % (step.tutorial.pk, step.num), True)
+        try:
+            commit_instance(inst, 'Commit tutorial %s, step num %s' % (step.tutorial.pk, step.num), True)
+        except Exception, e:
+            logging.exception(e)
+        
         # return inst.get_logs()
         app = cloud.apps.get(inst.app)
         return app.logs(num=10)
