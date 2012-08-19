@@ -15,7 +15,7 @@ cloud = heroku.from_key(settings.HEROKU_KEY)
 def ex(call):
     num = os.system(call)
     if num:
-        raise Exception('Error code: ' + num)
+        raise Exception('Error code: ' + str(num))
 
 @task.task()
 def setup_enviroment(session_key, tutorial_id):
