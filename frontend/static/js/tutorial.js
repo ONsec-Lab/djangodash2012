@@ -61,7 +61,7 @@ Tutorial.prototype.console = function (message) {
 
 Tutorial.prototype.waitTask = function (task_id, callback) {
     var self = this;
-    self.getTask(task_id, callback);
+    getTask(task_id, callback);
 };
 
 /**
