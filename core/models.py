@@ -66,14 +66,3 @@ class Instance(models.Model):
 
     def __unicode__(self):
         return '%s' % self.app
-
-
-    def repo_path(self, *args):
-        return path.join(settings.REPOS_PATH, self.app, *args)
-
-    def write_file(self, file_path, code):
-        path = self.repo_path(file_path)
-        open(path, 'w').write(code)
-
-    def restart(self):
-        pass

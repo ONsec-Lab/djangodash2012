@@ -32,11 +32,14 @@ def run_step(session_key, step, code):
     '''
     Run step tutorial code
     '''
-    file_path = step.file_path
+    file_path = os.path.join(step.tutorial.app_name, step.file_path)
     inst = Instance.objects.get(session_key=session_key)
-    inst.write_file(file_path, code)
-    inst.commit()
-    return inst.get_logs()
+    # inst.write_file(file_path, code)
+    write_file(inst, file_path, code)
+    commit_instance(inst, 'Commit tutorial %s, step num %s' % (step.tutorial.pk, step.num), True)
+    # return inst.get_logs()
+    app = cloud.apps.get(inst.app)
+    return app.logs(num=10)
 
 def get_task(id):
     '''
@@ -44,6 +47,11 @@ def get_task(id):
     TODO: define task structure in abstract class
     '''
     return AsyncResult(id)
+
+
+def write_file(inst, file_path, code):
+    path = os.path.join(settings.REPOS_PATH, inst.app, file_path)
+    open(path, 'w').write(code)
 
 @task.task()
 def get_instance(session_key):
