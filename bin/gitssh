@@ -1,2 +1,2 @@
 #!/bin/sh
-exec ssh -i $SSH_PUBLIC "$@"
+exec ssh -o StrictHostKeychecking=no -i $SSH_PUBLIC "$@"
