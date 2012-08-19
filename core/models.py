@@ -23,6 +23,8 @@ class Step(models.Model):
     num = models.SmallIntegerField(_('Number in Order'))
     tutorial = models.ForeignKey(Tutorial)
     description = models.TextField(_('Description'))
+    enable_editor = models.BooleanField(_('Enable Editor'), default=True)
+    enable_console = models.BooleanField(_('Enable Editor'), default=True)
     file_path = models.CharField(_('File Path'), max_length=255, null=True, blank=True)
 
     def __unicode__(self):
