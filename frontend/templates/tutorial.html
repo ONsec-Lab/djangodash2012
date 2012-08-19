@@ -6,7 +6,6 @@
     <h1>Step {{ step.num }} of {{ tutorial.steps_count }}: {{ step.title }}</h1>
     <button class="btn btn-large btn-primary hide" id="viewResultsButton">View results</button>
     <button class="btn btn-success btn-large"  id="tutorialRunButton"><i class="icon-play icon-white"></i> Run</button>
-    <a href="{{ next_url }}" class="btn btn-success btn-large hide" id="tutorialNextButton"><i class="icon-arrow-right icon-white"></i> Next</a>
 </div>
 <!-- result modal dialog -->
 <div class="modal hide" id="resultsWindow">
@@ -24,6 +23,9 @@
     <div class="span6 step-info">
         <div class="step-description">
             {{ step.description|safe }}
+        </div>
+        <div class="step-buttons">
+            <a href="{{ next_url }}" class="btn btn-large" id="tutorialNextButton"><i class="icon-arrow-right"></i> Next</a>
         </div>
     </div>
     <div class="span6">

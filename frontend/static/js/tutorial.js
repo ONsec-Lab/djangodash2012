@@ -76,8 +76,6 @@ Tutorial.prototype.whenTaskFinish = function (task) {
         return displayError('Error, during run your code');
     } else {
         self.viewResultsButton.removeClass('hide');
-        self.runButton.addClass('hide');
-        self.tutorialNextButton.removeClass('hide');
     }
 };
 
