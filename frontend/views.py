@@ -1,3 +1,4 @@
+import re
 import json
 
 from django.core.urlresolvers import reverse
@@ -125,6 +126,43 @@ def tutorial_step_run(request, tutorial_id, step_num):
     request.session['task_id'] = res.id
     response_data = {
         'task_id': res.id
+    }
+    return HttpResponse(json.dumps(response_data), mimetype="application/json")
+
+
+@ensure_csrf_cookie
+@csrf_protect
+def tutorial_step_console(request, tutorial_id, step_num):
+    '''
+    Run user code
+    Returns task id, that run user code
+    '''
+    if not request.is_ajax() or request.method != 'POST':
+        raise Http404()
+    tutorial = get_object_or_404(Tutorial, pk=tutorial_id)
+    try:
+        step = tutorial.step_set.get(num=step_num)
+    except Step.DoesNotExist as e:
+        raise Http404()
+
+    # TODO: each tutorial should have commands set
+    COMMANDS = {
+        'django-admin.py starproject [\w]+': 'Creating django site... done\n'
+    }
+
+    try:
+        data = json.loads(request.raw_post_data)
+        cmd = data['cmd']
+    except (KeyError, ValueError) as e:
+        print e
+        raise Http404()
+    results = 'Unknonw command\n'
+    for k in COMMANDS.keys():
+        if re.match(k, cmd):
+            results = COMMANDS[k]
+            break
+    response_data = {
+        'results': results
     }
     return HttpResponse(json.dumps(response_data), mimetype="application/json")
 

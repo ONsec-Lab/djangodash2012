@@ -41,7 +41,7 @@ Tutorial.prototype.startConsolePrompt = function () {
 
 Tutorial.prototype.runConsoleCommand = function (cmd) {
     var self = this;
-    var url = self.getStepUrl() + '/console';
+    var url = self.getStepUrl() + 'console/';
     $.ajax(url, {
         type: 'POST',
         dataType: 'json',
