@@ -23,7 +23,6 @@ def tutorial_start(request):
     tutorial_id = request.session.get('tutorial_id')
     if tutorial_id is None:
         tutorial_id = Tutorial.objects.filter()[0].pk
-    # TODO: run task to prepare enviroment
     setup_enviroment.delay(request.session.session_key, tutorial_id)
     return redirect('tutorial', tutorial_id=tutorial_id)
 

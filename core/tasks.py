@@ -24,7 +24,7 @@ def setup_enviroment(session_key, tutorial_id):
     logger = setup_enviroment.get_logger()
     logger.info('Setup enviroment for %s session_key: %s' % (tutorial_id, session_key))
     inst = get_instance(session_key)
-    # init_tutorial(inst, tutorial_id)
+    init_tutorial(inst, tutorial_id)
 
 @task.task()
 def run_step(step, code):
@@ -47,6 +47,7 @@ def get_instance(session_key):
     '''
     logger = create_instance.get_logger()
     logger.info('Find heroku instance for session_key: %s' % session_key)
+
     try:
         inst = Instance.objects.get(session_key=session_key)
         app = cloud.apps.get(inst.app)
