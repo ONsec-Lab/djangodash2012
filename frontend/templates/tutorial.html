@@ -26,6 +26,14 @@
         </div>
         <div class="step-buttons">
             <a href="{{ next_url }}" class="btn btn-large" id="tutorialNextButton"><i class="icon-arrow-right"></i> Next</a>
+            <div class="pagination">
+                <ul>
+                {% for s in tutorial.step_set.all %}
+                    <li {% ifequal s.num step.num %}class="active"{% endifequal %}><a href="{{ s.get_absolute_url }}">{{forloop.counter}}</a></li>
+                {% endfor %}
+                </ul>
+
+            </div>
         </div>
     </div>
     <div class="span6">

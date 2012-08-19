@@ -2,6 +2,7 @@ from os import path
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 
 class Tutorial(models.Model):
@@ -26,6 +27,12 @@ class Step(models.Model):
 
     def __unicode__(self):
         return u'%s' % unicode(self.title)
+
+    def get_absolute_url(self):
+        return reverse('tutorial_step', kwargs={
+            'tutorial_id': self.tutorial.pk,
+            'step_num': self.num
+        })
 
     def get_results_url(self, request):
         '''
