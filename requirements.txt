@@ -9,3 +9,4 @@ django_celery==3.0.6
 django-kombu
 gunicorn==0.14.6
 pytz==2012d
+pylint==0.25.2

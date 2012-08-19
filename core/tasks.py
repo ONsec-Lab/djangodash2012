@@ -36,10 +36,14 @@ def run_step(session_key, step, code):
     inst = Instance.objects.get(session_key=session_key)
     # inst.write_file(file_path, code)
     write_file(inst, file_path, code)
-    commit_instance(inst, 'Commit tutorial %s, step num %s' % (step.tutorial.pk, step.num), True)
-    # return inst.get_logs()
-    app = cloud.apps.get(inst.app)
-    return app.logs(num=10)
+    errors = check_file(inst, file_path)
+    if errors:
+        return errors
+    else:
+        commit_instance(inst, 'Commit tutorial %s, step num %s' % (step.tutorial.pk, step.num), True)
+        # return inst.get_logs()
+        app = cloud.apps.get(inst.app)
+        return app.logs(num=10)
 
 def get_task(id):
     '''
@@ -52,6 +56,14 @@ def get_task(id):
 def write_file(inst, file_path, code):
     path = os.path.join(settings.REPOS_PATH, inst.app, file_path)
     open(path, 'w').write(code)
+
+
+def check_file(inst, file_path):
+    dir_path = os.path.join(settings.REPOS_PATH, inst.app)
+    ex('cd %s ; pylint -E %s > check_file' % (dir_path, file_path), ignore_error=True)
+    errors = open(os.path.join(dir_path, 'check_file'), 'r').read()
+    errors = errors.replace('No config file found, using default configuration', '').strip()
+    return errors
 
 @task.task()
 def get_instance(session_key):
