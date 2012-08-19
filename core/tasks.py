@@ -12,9 +12,10 @@ from django.conf import settings
 # connect to heroku
 cloud = heroku.from_key(settings.HEROKU_KEY)
 
-def ex(call):
+def ex(call, ignore_error=False):
+    logging.info('Exec: %s' % str(call))
     num = os.system(call)
-    if num:
+    if num and not ignore_error:
         raise Exception('Error code: ' + str(num))
 
 @task.task()
@@ -28,10 +29,14 @@ def setup_enviroment(session_key, tutorial_id):
 
 @task.task()
 def run_step(session_key, step, code):
+    '''
+    Run step tutorial code
+    '''
     file_path = step.file_path
     inst = Instance.objects.get(session_key=session_key)
     inst.write_file(file_path, code)
-    inst.restart()
+    inst.commit()
+    return inst.get_logs()
 
 def get_task(id):
     '''
@@ -87,10 +92,17 @@ def init_git(inst):
     ap = os.path.join(rp, inst.app)
     bp = os.path.join(tp, 'base')
 
-    ex('mkdir -p %(rp)s; rm -rf %(ap)s; mkdir -p %(ap)s' % locals())
-    ex('cp -r %(bp)s/* %(ap)s' % locals())
-    ex('cd %(ap)s; git init; git add .; git commit -m "base"' % locals())
-    ex('echo \'[remote "heroku"]\n\turl = git@heroku.com:%(name)s.git\n\tfetch = +refs/heads/*:refs/remotes/heroku/*\' >> %(ap)s/.git/config' % locals())
+    ex('mkdir -p %(rp)s; mkdir -p %(ap)s' % locals()) # create repo dir
+    ex('cd %(ap)s; git init;' % locals()) # remove all old files and init repo
+    ex('cd %(ap)s; git rm -r *' % locals(), ignore_error=True)
+    try:
+        commit_instance(inst, 'empty')
+    except Exception, e:
+        logging.exception(e)
+    ex('cp -r %(bp)s/* %(ap)s;' % locals()) # copy base tutorial
+    ex('cd %(ap)s; git remote add heroku git@heroku.com:%(name)s.git' % locals(), ignore_error=True) # add remote heroku repos
+    ex('cd %(ap)s; git add .;' % locals()) # commit base tutorial files
+    commit_instance(inst, 'base tutorial files')
 
 @task.task()
 def init_tutorial(inst, tutid):
@@ -104,7 +116,12 @@ def init_tutorial(inst, tutid):
     tp = settings.TUTORIALS_PATH
     ap = os.path.join(settings.REPOS_PATH, inst.app)
     bp = os.path.join(tp, str(tutid))
-    ex('cp -r %(bp)s/* %(ap)s' % locals())
-    ex('cd %(ap)s; git add .; git commit -m "%(tutid)s"' % locals())
-    logger.info('Deploy on heroku instance %s...' % inst.app)
-    ex('cd %(ap)s; git push heroku master' % locals())
+    ex('cp -r %(bp)s/* %(ap)s' % locals()) # copy tutorial files to the repo
+    commit_instance(inst, 'Copy tutorial files %s' % tutid, True)
+
+def commit_instance(inst, msg, push=False):
+    ap = os.path.join(settings.REPOS_PATH, inst.app)
+    ex('cd %(ap)s; git add .; git commit -m "%(msg)s" -a' % locals()) # commit init tutorial files
+    logging.info('Deploy on heroku instance %s...' % inst.app)
+    if push:
+        ex('cd %(ap)s; git push heroku master' % locals())
