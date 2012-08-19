@@ -5,14 +5,14 @@ function Tutorial (config) {
     self.editor = ace.edit($('.django-ace-widget').get(0).firstChild);
     self.runButton = $('#tutorialRunButton');
     self.viewResultsButton = $('#viewResultsButton');
-    self.tutorialConsole = $('#tutorialConsole').jqconsole('Click to the Run button to execute your code\n');
+    self.console = $('#tutorialConsole').jqconsole('Click to the Run button to execute your code\n');
     self.tutorialNextButton = $('#tutorialNextButton');
 
     self.runButton.click(function () {
         if (self.runButton.hasClass('disabled')) {
             return false;
         }
-        self.tutorialConsole.Write('Executing your code...\n');
+        self.console.Write('Executing your code...\n');
         var code = self.editor.getValue();
         self.runButton.addClass('loading');
         self.runButton.addClass('disabled');
@@ -46,7 +46,7 @@ Tutorial.prototype.sendCode = function (code) {
         success: function (data, textStatus, xhr) {
             self.waitTask(data.task_id, function (data) {
                 if (!data.running) {
-                    self.console(data.results);
+                    self.log(data.results);
                     self.whenTaskFinish.bind(self)
                 }
             });
@@ -54,9 +54,9 @@ Tutorial.prototype.sendCode = function (code) {
     });
 };
 
-Tutorial.prototype.console = function (message) {
+Tutorial.prototype.log = function (message) {
     var self = this;
-    self.tutorialConsole.Write(message, 'jqconsole-output');
+    self.console.Write(message, 'jqconsole-output');
 }
 
 Tutorial.prototype.waitTask = function (task_id, callback) {
