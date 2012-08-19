@@ -60,7 +60,11 @@ def tutorial_step(request, tutorial_id, step_num):
     except Step.DoesNotExist as e:
         raise Http404()
 
-    inst = Instance.objects.get(session_key=request.session.session_key)
+    try:
+        inst = Instance.objects.get(session_key=request.session.session_key)
+    except Instance.DoesNotExist as e:
+        return redirect('index')
+
     results_url = 'http://%s.herokuapp.com/' % inst.app
     initial = {
         'code': inst.get_code(step)
