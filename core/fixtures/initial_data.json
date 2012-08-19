@@ -21,8 +21,8 @@
     "pk": 2,
     "model": "core.step",
     "fields": {
-        "description": "Some urls tutorial",
-        "title": "Django urls",
+        "description": "<p>The Django admin site is not activated by default \u2013 it\u2019s an opt-in thing. To activate the admin site for your installation, do these three things:</p>\r\n\r\n<p>Uncomment \"django.contrib.admin\" in the INSTALLED_APPS setting.</p>\r\n\r\n<p>Run python manage.py syncdb. Since you have added a new application to INSTALLED_APPS, the database tables need to be updated.</p>\r\n\r\n<blockquote><p>Edit your mysite/urls.py file and uncomment the lines that reference the admin \u2013 there are three lines in total to uncomment. This file is a URLconf; we\u2019ll dig into URLconfs in the next tutorial. For now, all you need to know is that it maps URL roots to applications.</p></blockquote>\r\n",
+        "title": "Activate the admin site",
         "enable_editor": true,
         "file_path": "urls.py",
         "num": 3,
