@@ -43,7 +43,7 @@ class Step(models.Model):
         '''
         Returl url to results for current user
         '''
-        return 'http://172.16.240.130:8000/admin';
+        return 'http://172.16.240.130:8000/admin'
 
     def get_next_num(self):
         '''
@@ -78,4 +78,3 @@ class Instance(models.Model):
             step.file_path)
         code = open(code_path, 'r').read()
         return code
-
