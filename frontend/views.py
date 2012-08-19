@@ -55,7 +55,7 @@ def tutorial_step(request, tutorial_id, step_num):
         raise Http404()
 
     inst = Instance.objects.get(session_key=request.session.session_key)
-
+    results_url = 'http://%s.herokuapp.com/' % inst.app
     initial = {
         'code': inst.get_code(step)
     }
@@ -73,7 +73,7 @@ def tutorial_step(request, tutorial_id, step_num):
     return render_to_response('tutorial.html', {
             'tutorial': tutorial,
             'step': step,
-            'results_url': step.get_results_url(request),
+            'results_url': results_url,
             'next_url': next_url,
             'editor_form': EditorForm(initial=initial)
         },
