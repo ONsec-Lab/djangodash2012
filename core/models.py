@@ -43,14 +43,6 @@ class Step(models.Model):
             return None
         return next_num
 
-    def get_code(self):
-        code_path = path.join(settings.TUTORIALS_PATH,
-            str(self.tutorial.pk),
-            self.tutorial.app_name,
-            self.file_path)
-        code = open(code_path, 'r').read()
-        return code
-
 STATUS_CHOICES = (
     ('new', _('New')),
     ('created', _('Created')),
@@ -66,3 +58,12 @@ class Instance(models.Model):
 
     def __unicode__(self):
         return '%s' % self.app
+
+    def get_code(self, step):
+        code_path = path.join(settings.REPOS_PATH,
+            self.app,
+            step.tutorial.app_name,
+            step.file_path)
+        code = open(code_path, 'r').read()
+        return code
+

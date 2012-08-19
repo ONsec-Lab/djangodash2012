@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 
 from core.tasks import setup_enviroment, run_step, get_task
-from core.models import Tutorial, Step
+from core.models import Tutorial, Step, Instance
 from forms import EditorForm
 
 def index(request):
@@ -53,8 +53,11 @@ def tutorial_step(request, tutorial_id, step_num):
         step = tutorial.step_set.get(num=step_num)
     except Step.DoesNotExist as e:
         raise Http404()
+
+    inst = Instance.objects.get(session_key=request.session.session_key)
+
     initial = {
-        'code': step.get_code()
+        'code': inst.get_code(step)
     }
 
     next_num = step.get_next_num()
