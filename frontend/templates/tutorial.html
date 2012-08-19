@@ -28,22 +28,25 @@
             <a href="{{ next_url }}" class="btn btn-large" id="tutorialNextButton"><i class="icon-arrow-right"></i> Next</a>
             <div class="pagination">
                 <ul>
-                {% for s in tutorial.step_set.all %}
+                {% for s in tutorial.steps %}
                     <li {% ifequal s.num step.num %}class="active"{% endifequal %}><a href="{{ s.get_absolute_url }}">{{forloop.counter}}</a></li>
                 {% endfor %}
                 </ul>
-
             </div>
         </div>
     </div>
     <div class="span6">
+        {% if step.enable_editor %}
         <div class="step-editor">
             <div class="step-file">{{ step.file_path }}</div>
             {{ editor_form.code }}
         </div>
+        {% endif %}
+        {% if step.enable_console %}
         <div class="step-console">
             <div  id="tutorialConsole"></div>
         </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
@@ -60,6 +63,8 @@
             tutorial = new Tutorial({
                 id: {{tutorial.id}},
                 step: {{step.num}},
+                enable_editor: {{ step.enable_editor|lower }},
+                enable_console: {{ step.enable_console|lower }}
             });
         });
     </script>

@@ -2,10 +2,15 @@ function Tutorial (config) {
     var self = this;
     self.id = config.id;
     self.currentStep = config.step;
-    self.editor = ace.edit($('.django-ace-widget').get(0).firstChild);
+    if (config.enable_editor) {
+        self.editor = ace.edit($('.django-ace-widget').get(0).firstChild);
+    }
     self.runButton = $('#tutorialRunButton');
     self.viewResultsButton = $('#viewResultsButton');
-    self.console = $('#tutorialConsole').jqconsole('Click to the Run button to execute your code\n');
+
+    if (config.enable_console) {
+        self.console = $('#tutorialConsole').jqconsole('Click to the Run button to execute your code\n');
+    }
     self.tutorialNextButton = $('#tutorialNextButton');
 
     self.runButton.click(function () {

@@ -17,6 +17,9 @@ class Tutorial(models.Model):
     def steps_count(self):
         return self.step_set.all().count()
 
+    def steps(self):
+        return self.step_set.all().order_by('num')
+
 
 class Step(models.Model):
     title = models.CharField(_('Title'), max_length=255)
@@ -24,7 +27,7 @@ class Step(models.Model):
     tutorial = models.ForeignKey(Tutorial)
     description = models.TextField(_('Description'))
     enable_editor = models.BooleanField(_('Enable Editor'), default=True)
-    enable_console = models.BooleanField(_('Enable Editor'), default=True)
+    enable_console = models.BooleanField(_('Enable Console'), default=True)
     file_path = models.CharField(_('File Path'), max_length=255, null=True, blank=True)
 
     def __unicode__(self):

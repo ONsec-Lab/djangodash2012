@@ -66,9 +66,12 @@ def tutorial_step(request, tutorial_id, step_num):
         return redirect('index')
 
     results_url = 'http://%s.herokuapp.com/' % inst.app
-    initial = {
-        'code': inst.get_code(step)
-    }
+    editor_form = None
+    if step.enable_editor:
+        initial = {
+            'code': inst.get_code(step)
+        }
+        editor_form = EditorForm(initial=initial)
 
     next_num = step.get_next_num()
     if next_num is None:
@@ -85,7 +88,7 @@ def tutorial_step(request, tutorial_id, step_num):
             'step': step,
             'results_url': results_url,
             'next_url': next_url,
-            'editor_form': EditorForm(initial=initial)
+            'editor_form': editor_form
         },
         context_instance=RequestContext(request))
 
