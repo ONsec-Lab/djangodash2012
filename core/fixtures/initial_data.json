@@ -9,20 +9,36 @@
     "pk": 1,
     "model": "core.step",
     "fields": {
-        "file_path": "models.py",
-        "num": 1,
         "description": "<p>Let\u2019s learn by example.<p>\r\n\r\n<p>Throughout this tutorial, we\u2019ll walk you through the creation of a basic poll application.</p>\r\n\r\n<p>It\u2019ll consist of two parts:</p>\r\n\r\n<ul><li>A public site that lets people view polls and vote in them.</li>\r\n<li>An admin site that lets you add, change and delete polls.</li>\r\n</ul>\r\n\r\n<blockquote><p>If you\u2019re having trouble going through this tutorial, please post a message to django-users or drop by #django on irc.freenode.net to chat with other Django users who might be able to help.</p></blockquote>\r\n\r\n<h3>Creating models</h3>\r\n<p>Now that your environment \u2014 a \"project\" \u2014 is set up, you're set to start doing work.</p>\r\n\r\n<p>Each application you write in Django consists of a Python package, somewhere on your Python path, that follows a certain convention. Django comes with a utility that automatically generates the basic directory structure of an app, so you can focus on writing code rather than creating directories.</p>\r\n<pre>\r\nfrom django.db import models\r\n\r\nclass Poll(models.Model):\r\n    question = models.CharField(max_length=200)\r\n    pub_date = models.DateTimeField('date published')\r\n\r\nclass Choice(models.Model):\r\n    poll = models.ForeignKey(Poll)\r\n    choice = models.CharField(max_length=200)\r\n    votes = models.IntegerField()\r\n</pre>",
-        "tutorial": 1,
-        "title": "Django models"
+        "title": "Django models",
+        "enable_editor": true,
+        "file_path": "models.py",
+        "num": 2,
+        "enable_console": true,
+        "tutorial": 1
     }
 }, {
     "pk": 2,
     "model": "core.step",
     "fields": {
-        "file_path": "urls.py",
-        "num": 2,
         "description": "Some urls tutorial",
-        "tutorial": 1,
-        "title": "Django urls"
+        "title": "Django urls",
+        "enable_editor": true,
+        "file_path": "urls.py",
+        "num": 3,
+        "enable_console": true,
+        "tutorial": 1
+    }
+}, {
+    "pk": 3,
+    "model": "core.step",
+    "fields": {
+        "description": "<p>If this is your first time using Django, you\u2019ll have to take care of some initial setup. Namely, you\u2019ll need to auto-generate some code that establishes a Django project \u2013 a collection of settings for an instance of Django, including database configuration, Django-specific options and application-specific settings.</p>\r\n<p>From the command line, cd into a directory where you\u2019d like to store your code, then run the following command:</p>\r\n<pre>\r\ndjango-admin.py startproject mysite\r\n</pre>",
+        "title": "Start project",
+        "enable_editor": false,
+        "file_path": "",
+        "num": 1,
+        "enable_console": true,
+        "tutorial": 1
     }
 }]
