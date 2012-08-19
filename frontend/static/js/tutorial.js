@@ -87,7 +87,7 @@ Tutorial.prototype.sendCode = function (code) {
 Tutorial.prototype.log = function (message) {
     var self = this;
     self.console.Write(message, 'jqconsole-output');
-}
+};
 
 Tutorial.prototype.waitTask = function (task_id, callback) {
     var self = this;

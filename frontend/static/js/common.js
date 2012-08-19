@@ -12,7 +12,7 @@ var getTask = function (task_id, callback) {
             }
         }
     });
-}
+};
 
 
 function displayError (e) {
@@ -29,7 +29,7 @@ function displayError (e) {
 
 jQuery.ajaxSetup({
     error: function (r, s, e) {
-        displayError(e)
+        displayError(e);
     }
 });
 

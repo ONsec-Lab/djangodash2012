@@ -12,6 +12,7 @@ from models import OurUser, Inst
 from tasks import create_instance, init_tutorial
 from django.conf import settings
 
+
 class HerokuTest(TestCase):
     def setUp(self):
         self.cloud = heroku.from_key(settings.HEROKU_KEY)
@@ -32,5 +33,3 @@ class HerokuTest(TestCase):
     def test_init_tutorial(self):
         inst = Inst.objects.get(app=self.name)
         init_tutorial(inst, 1)
-
-
