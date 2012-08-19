@@ -14,6 +14,8 @@ def index(request):
     return render_to_response('index.html', {},
         context_instance=RequestContext(request))
 
+@ensure_csrf_cookie
+@csrf_protect
 def tutorial_start(request):
     '''
     Redirect to the start tutorial page
@@ -23,8 +25,12 @@ def tutorial_start(request):
     tutorial_id = request.session.get('tutorial_id')
     if tutorial_id is None:
         tutorial_id = Tutorial.objects.filter()[0].pk
-    setup_enviroment.delay(request.session.session_key, tutorial_id)
-    return redirect('tutorial', tutorial_id=tutorial_id)
+    res = setup_enviroment.delay(request.session.session_key, tutorial_id)
+    response_data = {
+        'task_id': res.id
+    }
+    request.session['task_id'] = res.id
+    return HttpResponse(json.dumps(response_data), mimetype="application/json")
 
 def tutorial(request, tutorial_id):
     '''
@@ -128,5 +134,5 @@ def task(request, task_id):
         'running': not task.ready()
     }
     if task.ready():
-        task_json['console'] = task.get()
+        task_json['results'] = task.get()
     return HttpResponse(json.dumps(task_json), mimetype="application/json")

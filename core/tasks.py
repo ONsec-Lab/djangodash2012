@@ -26,6 +26,7 @@ def setup_enviroment(session_key, tutorial_id):
     logger.info('Setup enviroment for %s session_key: %s' % (tutorial_id, session_key))
     inst = get_instance(session_key)
     init_tutorial(inst, tutorial_id)
+    return tutorial_id
 
 @task.task()
 def run_step(session_key, step, code):

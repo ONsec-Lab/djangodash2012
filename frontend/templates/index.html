@@ -1,17 +1,69 @@
 {% extends "base.html" %}
 
 {% block container %}
+    {% csrf_token %}
 <!-- <div style="text-align:center"> -->
     <div class="page-header">
         <h1>Welcome to the Django Interactive Tutorial</h1>
     </div>
     <p>This website is a set of interactive coding exercises to help you quickly learn how to benefit from Django and MVC.</p>
 
-    <p><a href="{% url tutorial_start %}" class="btn btn-large btn-primary">OK, take me to the first tutorial!</a></p>
+    <p>
+        <a id="tutorialStartButton" href="{% url tutorial_start %}" class="btn btn-large btn-primary">OK, take me to the first tutorial!</a>
+    </p>
 
 <!-- </div> -->
 
 <p>To <a href="https://www.djangoproject.com/download/">download Django</a>, or for <a href="https://docs.djangoproject.com/en/1.4/">full documentation</a>, see the project's <a href="https://djangoproject.com/">main site</a>.</p>
 
+{% block media_extra %}
+{{ block.super }}
+
+<script type="text/javascript">
+
+    var getTask = function (task_id, callback) {
+        var self = this;
+        $.ajax('/task/' + task_id + '/', {
+            type: 'GET',
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+                if (!data.running) {
+                    callback(data);
+                } else {
+                    setTimeout(function () {
+                        getTask(task_id, callback);
+                    }, 3000);
+                }
+            }
+        });
+    }
+
+    $('#tutorialStartButton').click(function () {
+        var $link = $(this);
+        if ($link.hasClass('disabled')) {
+            return false;
+        }
+        $link.toggleClass('disabled');
+        $link.toggleClass('loading');
+
+        var url = $link.attr('href');
+        $.ajax(url, {
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus, xhr) {
+                var task_id = data.task_id;
+                getTask(task_id, function (data) {
+                    var tutorial_url = '/tutorial/' + data.results; // TODO: use url reverse
+                    $link.toggleClass('disabled');
+                    $link.toggleClass('loading');
+                    document.location.href = tutorial_url;
+                });
+            }
+        })
+        return false;
+    });
+
+</script>
+{% endblock %}
 
 {% endblock %}

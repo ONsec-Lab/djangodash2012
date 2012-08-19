@@ -60,8 +60,8 @@ Tutorial.prototype.getTask = function (task_id) {
         type: 'GET',
         dataType: "json",
         success: function (data, textStatus, xhr) {
-            if (data.console) {
-                self.console(data.console);
+            if (data.results) {
+                self.console(data.results);
             }
             if (!data.running) {
                 self.whenTaskFinish(data);
