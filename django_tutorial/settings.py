@@ -158,7 +158,12 @@ LOGGING = {
 
 HEROKU_KEY = 'e8cfbdcb379b1051d4369d237b73f28702b917d5'
 TUTORIALS_PATH = project_path('../tutorials')
+<<<<<<< HEAD
 REPOS_PATH = '/app/repos'
+=======
+REPOS_PATH = '~/repos'
+INSTANCE_PREFIX = 'rocket'
+>>>>>>> e4948dfe70bdddaf0f35a6c34757f3c6a64385fe
 
 import djcelery
 djcelery.setup_loader()
