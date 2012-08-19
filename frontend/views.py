@@ -147,7 +147,7 @@ def tutorial_step_console(request, tutorial_id, step_num):
 
     # TODO: each tutorial should have commands set
     COMMANDS = [
-        ['django-admin.py starproject \w+$', 'Creating django site... done\n'],
+        [r'^django\-admin\.py\sstartproject\s\w+$', 'Creating django site... done\n'],
     ]
 
     try:
