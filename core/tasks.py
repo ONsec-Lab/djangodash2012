@@ -45,6 +45,9 @@ def run_step(session_key, step, code):
             commit_instance(inst, 'Commit tutorial %s, step num %s' % (step.tutorial.pk, step.num), True)
         except Exception, e:
             logging.exception(e)
+        # syncdb
+        ap = os.path.join(settings.REPOS_PATH, inst.app)
+        ex('cd %(ap)s; heroku run python manage.py syncdb --noinput; ' % locals())
         # return inst.get_logs()
         app = cloud.apps.get(inst.app)
         return app.logs(num=10)
