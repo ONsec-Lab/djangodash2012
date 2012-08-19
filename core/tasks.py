@@ -137,8 +137,10 @@ def init_tutorial(inst, tutid):
     tp = settings.TUTORIALS_PATH
     ap = os.path.join(settings.REPOS_PATH, inst.app)
     bp = os.path.join(tp, str(tutid))
+    name = inst.app
     ex('cp -r %(bp)s/* %(ap)s' % locals()) # copy tutorial files to the repo
     commit_instance(inst, 'Copy tutorial files %s' % tutid, True)
+    ex('cd %(ap)s; heroku pg:reset DATABASE --confirm %(name)s ; heroku run python manage.py syncdb --noinput; ' % locals())
 
 def commit_instance(inst, msg, push=False):
     ap = os.path.join(settings.REPOS_PATH, inst.app)
