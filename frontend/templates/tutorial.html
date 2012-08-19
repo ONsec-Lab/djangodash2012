@@ -4,7 +4,8 @@
 {% csrf_token %}
 <div class="page-header">
     <h1>Step {{ step.num }} of {{ tutorial.steps_count }}: {{ step.title }}</h1>
-    <button class="btn btn-large btn-primary hide" id="viewResultsButton">View results</button>
+    <a href="{{ results_url }}" class="btn btn-large btn-primary " id="viewResultsButton">View results</a>
+
     <button class="btn btn-success btn-large"  id="tutorialRunButton"><i class="icon-play icon-white"></i> Run</button>
 </div>
 <!-- result modal dialog -->

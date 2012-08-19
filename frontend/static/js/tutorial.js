@@ -31,6 +31,7 @@ function Tutorial (config) {
 
     self.viewResultsButton.click(function () {
         self.displayResults();
+        return false;
     });
 }
 
