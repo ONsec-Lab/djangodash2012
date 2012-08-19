@@ -1,3 +1,20 @@
+var getTask = function (task_id, callback) {
+    var self = this;
+    $.ajax('/task/' + task_id + '/', {
+        type: 'GET',
+        dataType: "json",
+        success: function (data, textStatus, xhr) {
+            callback(data);
+            if (data.running) {
+                setTimeout(function () {
+                    getTask(task_id, callback);
+                }, 3000);
+            }
+        }
+    });
+}
+
+
 function displayError (e) {
     $('.alert').remove();
     $('#mainContainer').prepend('<div class="row">'

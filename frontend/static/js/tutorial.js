@@ -44,7 +44,12 @@ Tutorial.prototype.sendCode = function (code) {
         data: JSON.stringify(data),
         dataType: "json",
         success: function (data, textStatus, xhr) {
-            self.waitTask(data.task_id, self.whenTaskFinish.bind(self));
+            self.waitTask(data.task_id, function (data) {
+                if (!data.running) {
+                    self.console(data.results);
+                    self.whenTaskFinish.bind(self)
+                }
+            });
         }
     });
 };
@@ -54,29 +59,9 @@ Tutorial.prototype.console = function (message) {
     self.tutorialConsole.Write(message, 'jqconsole-output');
 }
 
-Tutorial.prototype.getTask = function (task_id) {
+Tutorial.prototype.waitTask = function (task_id, callback) {
     var self = this;
-    $.ajax('/task/' + task_id + '/', {
-        type: 'GET',
-        dataType: "json",
-        success: function (data, textStatus, xhr) {
-            if (data.results) {
-                self.console(data.results);
-            }
-            if (!data.running) {
-                self.whenTaskFinish(data);
-            } else {
-                setTimeout(function () {
-                    self.getTask(task_id);
-                }, 3000);
-            }
-        }
-    });
-}
-
-Tutorial.prototype.waitTask = function (task_id) {
-    var self = this;
-    self.getTask(task_id);
+    self.getTask(task_id, callback);
 };
 
 /**
