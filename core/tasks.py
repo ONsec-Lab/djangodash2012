@@ -27,11 +27,11 @@ def setup_enviroment(session_key, tutorial_id):
     init_tutorial(inst, tutorial_id)
 
 @task.task()
-def run_step(step, code):
-    for x in range(0, 10):
-        print 'Run code...'
-        time.sleep(1)
-    return 'successfuly finished\n'
+def run_step(session_key, step, code):
+    file_path = step.file_path
+    inst = Instance.objects.get(session_key=session_key)
+    inst.write_file(file_path, code)
+    inst.restart()
 
 def get_task(id):
     '''

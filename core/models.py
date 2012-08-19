@@ -6,13 +6,16 @@ from django.conf import settings
 
 class Tutorial(models.Model):
     title = models.CharField(_('Title'), max_length=255)
-    app_name = models.CharField(_('Django Application Name'), max_length=255, default='hellodjango')
+    app_name = models.CharField(_('Django Application Name'),
+        max_length=255,
+        default='hellodjango')
 
     def __unicode__(self):
         return u'%s' % unicode(self.title)
 
     def steps_count(self):
         return self.step_set.all().count()
+
 
 class Step(models.Model):
     title = models.CharField(_('Title'), max_length=255)
@@ -63,3 +66,14 @@ class Instance(models.Model):
 
     def __unicode__(self):
         return '%s' % self.app
+
+
+    def repo_path(self, *args):
+        return path.join(settings.REPOS_PATH, self.app, *args)
+
+    def write_file(self, file_path, code):
+        path = self.repo_path(file_path)
+        open(path, 'w').write(code)
+
+    def restart(self):
+        pass

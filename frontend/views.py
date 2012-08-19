@@ -105,7 +105,7 @@ def tutorial_step_run(request, tutorial_id, step_num):
     except (KeyError, ValueError) as e:
         print e
         raise Http404()
-    res = run_step.delay(step, code)
+    res = run_step.delay(request.session.session_key, step, code)
     request.session['task_id'] = res.id
     response_data = {
         'task_id': res.id
