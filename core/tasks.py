@@ -93,7 +93,7 @@ def create_instance(session_key):
     logger = create_instance.get_logger()
     logger.info('Create heroku instance for session_key: %s' % session_key)
     inst = Instance.objects.create(session_key=session_key)
-    name = 'rocket-%s' % (inst.id)
+    name = '%s-%s' % (settings.INSTANCE_PREFIX, inst.id)
     logger.info('Create heroku instance for session_key: %s, name: %s' % (session_key, name))
     cloud.apps.add(name)
     inst.app = name
