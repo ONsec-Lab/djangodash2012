@@ -50,6 +50,7 @@
 
 .step-editor {
     position: relative;
+    margin-bottom: 20px;
     .django-ace-widget {
         width: 100%;
     }
@@ -57,21 +58,6 @@
 
 .step-info h1 {
     margin-bottom: 15px;
-}
-
-.step-console {
-    width: 100%;
-    position: relative;
-    // background-color:black;
-    margin-top: 20px;
-    height: 200px;
-    // overflow: auto;
-    // color: white;
-
-    // #tutorialConsole {
-    //     margin: 30px;
-    //     white-space: pre;
-    // }
 }
 
 .btn.loading {
@@ -95,6 +81,69 @@
     -moz-background-size: 50px 50px;
     -webkit-background-size: 50px 50px;
     -webkit-animation: animate-stripes 2s linear infinite;
+}
+
+
+
+.step-console {
+    width: 100%;
+    position: relative;
+    // background-color:black;
+    margin-top: 0px;
+    height: 200px;
+    // overflow: auto;
+    // color: white;
+
+    // #tutorialConsole {
+    //     margin: 30px;
+    //     white-space: pre;
+    // }
+}
+
+.step-console.console-only {
+    height: 500px;
+}
+
+/* The console container element */
+#tutorialConsole {
+  // position: absolute;
+  // width: 400px;
+  // height: 500px;
+  pre {
+    background-color:black;
+    color: white;
+  }
+
+   /* The cursor. */
+    .jqconsole-cursor {
+        background-color: gray;
+    }
+    /* The cursor color when the console looses focus. */
+    .jqconsole-blurred .jqconsole-cursor {
+        background-color: #666;
+    }
+    /* The current prompt text color */
+    .jqconsole-prompt {
+        // color: #0d0;
+    }
+    /* The command history */
+    .jqconsole-old-prompt {
+        // color: #0b0;
+        font-weight: normal;
+    }
+    /* The text color when in input mode. */
+    .jqconsole-input {
+        color: #dd0;
+    }
+    /* Previously entered input. */
+    .jqconsole-old-input {
+        // color: #bb0;
+        font-weight: normal;
+    }
+    /* The text color of the output. */
+    .jqconsole-output {
+        color: white;
+    }
 }
 
 @-webkit-keyframes animate-stripes {

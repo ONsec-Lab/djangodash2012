@@ -43,8 +43,8 @@
         </div>
         {% endif %}
         {% if step.enable_console %}
-        <div class="step-console">
-            <div  id="tutorialConsole"></div>
+        <div class="step-console {% if not step.enable_editor %}console-only{% endif %}">
+            <div id="tutorialConsole"></div>
         </div>
         {% endif %}
     </div>

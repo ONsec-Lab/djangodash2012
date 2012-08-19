@@ -11,6 +11,11 @@ function Tutorial (config) {
     if (config.enable_console) {
         self.console = $('#tutorialConsole').jqconsole('Click to the Run button to execute your code\n');
     }
+
+    // if only console
+    if (config.enable_console && !config.enable_editor) {
+        self.startConsolePrompt();
+    }
     self.tutorialNextButton = $('#tutorialNextButton');
 
     self.runButton.click(function () {
@@ -28,6 +33,13 @@ function Tutorial (config) {
         self.displayResults();
     });
 }
+
+Tutorial.prototype.startConsolePrompt = function () {
+    var self = this;
+    self.console.Prompt(true, function (input) {
+        console.log();
+    });
+};
 
 Tutorial.prototype.displayResults = function () {
     var self = this;

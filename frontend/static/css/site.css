@@ -46,6 +46,7 @@ body {
 
 .step-editor {
   position: relative;
+  margin-bottom: 20px;
 }
 
 .step-editor .django-ace-widget {
@@ -56,13 +57,6 @@ body {
   margin-bottom: 15px;
 }
 
-.step-console {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  margin-top: 20px;
-}
-
 .btn.loading {
   background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.25, rgba(0, 0, 0, 0.1)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(0, 0, 0, 0.1)), color-stop(0.75, rgba(0, 0, 0, 0.1)), color-stop(0.75, transparent), to(transparent));
   background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%, transparent 75%, transparent);
@@ -70,6 +64,65 @@ body {
      -moz-background-size: 50px 50px;
           background-size: 50px 50px;
   -webkit-animation: animate-stripes 2s linear infinite;
+}
+
+.step-console {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  margin-top: 0;
+}
+
+.step-console.console-only {
+  height: 500px;
+}
+
+/* The console container element */
+
+#tutorialConsole {
+  /* The cursor. */
+
+  /* The cursor color when the console looses focus. */
+
+  /* The current prompt text color */
+
+  /* The command history */
+
+  /* The text color when in input mode. */
+
+  /* Previously entered input. */
+
+  /* The text color of the output. */
+
+}
+
+#tutorialConsole pre {
+  color: white;
+  background-color: black;
+}
+
+#tutorialConsole .jqconsole-cursor {
+  background-color: gray;
+}
+
+#tutorialConsole .jqconsole-blurred .jqconsole-cursor {
+  background-color: #666;
+}
+
+#tutorialConsole .jqconsole-old-prompt {
+  font-weight: normal;
+}
+
+#tutorialConsole .jqconsole-input {
+  color: #dd0;
+}
+
+#tutorialConsole .jqconsole-old-input {
+  font-weight: normal;
+}
+
+#tutorialConsole .jqconsole-output {
+  color: white;
 }
 
 @-webkit-keyframes animate-stripes {
