@@ -47,7 +47,7 @@ Tutorial.prototype.runConsoleCommand = function (cmd) {
         dataType: 'json',
         data: {
             cmd: cmd
-        }
+        },
         success: function (data, status, xhr) {
             self.log(data.results);
             self.startConsolePrompt();
