@@ -66,7 +66,7 @@ def tutorial_step(request, tutorial_id, step_num):
     except Instance.DoesNotExist as e:
         return redirect('index')
 
-    results_url = 'http://%s.herokuapp.com/' % inst.app
+    results_url = 'http://%s.herokuapp.com/admin/' % inst.app
     editor_form = None
     if step.enable_editor:
         initial = {
