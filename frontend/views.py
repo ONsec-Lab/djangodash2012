@@ -146,20 +146,20 @@ def tutorial_step_console(request, tutorial_id, step_num):
         raise Http404()
 
     # TODO: each tutorial should have commands set
-    COMMANDS = {
-        'django-admin.py starproject [\w]+': 'Creating django site... done\n'
-    }
+    COMMANDS = [
+        ['django-admin.py starproject \w+$', 'Creating django site... done\n'],
+    ]
 
     try:
         data = json.loads(request.raw_post_data)
-        cmd = data['cmd']
+        cmd = data['cmd'].strip()
     except (KeyError, ValueError) as e:
         print e
         raise Http404()
     results = 'Unknonw command\n'
-    for k in COMMANDS.keys():
-        if re.match(k, cmd):
-            results = COMMANDS[k]
+    for k in COMMANDS:
+        if re.match(k[0], cmd):
+            results = k[1]
             break
     response_data = {
         'results': results

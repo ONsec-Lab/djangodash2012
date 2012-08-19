@@ -45,9 +45,9 @@ Tutorial.prototype.runConsoleCommand = function (cmd) {
     $.ajax(url, {
         type: 'POST',
         dataType: 'json',
-        data: {
+        data: JSON.stringify({
             cmd: cmd
-        },
+        }),
         success: function (data, status, xhr) {
             self.log(data.results);
             self.startConsolePrompt();
