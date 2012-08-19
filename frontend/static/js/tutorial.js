@@ -36,8 +36,22 @@ function Tutorial (config) {
 
 Tutorial.prototype.startConsolePrompt = function () {
     var self = this;
-    self.console.Prompt(true, function (input) {
-        console.log();
+    self.console.Prompt(true, self.runConsoleCommand.bind(self));
+};
+
+Tutorial.prototype.runConsoleCommand = function (cmd) {
+    var self = this;
+    var url = self.getStepUrl() + '/console';
+    $.ajax(url, {
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            cmd: cmd
+        }
+        success: function (data, status, xhr) {
+            self.log(data.results);
+            self.startConsolePrompt();
+        }
     });
 };
 
