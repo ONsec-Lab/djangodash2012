@@ -9,6 +9,10 @@ PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 # helper function to construct project related path
 project_path = lambda x: os.path.realpath(os.path.join(PROJECT_DIR, x))
 
+os.environ.setdefault("SSH_PUBLIC", project_path('../ssh/id_rsa.pub'))
+os.environ.setdefault("GIT_SSH", "gitssh")
+os.environ["PATH"] += ':' + project_path('../bin')
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -158,12 +162,9 @@ LOGGING = {
 
 HEROKU_KEY = 'e8cfbdcb379b1051d4369d237b73f28702b917d5'
 TUTORIALS_PATH = project_path('../tutorials')
-<<<<<<< HEAD
 REPOS_PATH = '/app/repos'
-=======
 REPOS_PATH = '~/repos'
 INSTANCE_PREFIX = 'rocket'
->>>>>>> e4948dfe70bdddaf0f35a6c34757f3c6a64385fe
 
 import djcelery
 djcelery.setup_loader()
